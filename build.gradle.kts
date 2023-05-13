@@ -1,6 +1,5 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
-import java.util.*
 
 fun properties(key: String) = providers.gradleProperty(key)
 fun environment(key: String) = providers.environmentVariable(key)
@@ -20,14 +19,13 @@ repositories {
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(11)
 }
 
 intellij {
     pluginName.set(properties("pluginName"))
     version.set(properties("platformVersion"))
     type.set(properties("platformType"))
-
     plugins.set(properties("platformPlugins").map { it.split(',').map(String::trim).filter(String::isNotEmpty) })
 }
 
@@ -41,7 +39,7 @@ tasks {
         gradleVersion = properties("gradleVersion").get()
     }
 
-    /*patchPluginXml {
+    patchPluginXml {
         version.set(properties("pluginVersion"))
         sinceBuild.set(properties("pluginSinceBuild"))
         untilBuild.set(properties("pluginUntilBuild"))
@@ -71,7 +69,7 @@ tasks {
         })
     }
 
-    val marketplaceProps = Properties().apply {
+    /*val marketplaceProps = Properties().apply {
         load(project.rootProject.file("marketplace.properties").inputStream())
     }
 

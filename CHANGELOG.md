@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-## [0.0.1] - 2023-05-12
+## [1.0.0] - 2023-05-13
 
 ### Added
-- Plugin pre-release version
+- Initial major release.
