@@ -1,3 +1,6 @@
+[![Version](https://img.shields.io/jetbrains/plugin/v/21792-protobuf-blueprint.svg)](https://plugins.jetbrains.com/plugin/21792-protobuf-blueprint)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/21792-protobuf-blueprint.svg)](https://plugins.jetbrains.com/plugin/21792-protobuf-blueprint)
+
 ![logo](./media/logo.png)
 
 <!-- Plugin description -->
@@ -17,7 +20,7 @@ format.
 
 - Manually:
 
-  Download the [latest release](https://github.com/protobuf-blueprint-plugin/releases/latest) and install it manually
+  Download the [latest release](https://github.com/numq/protobuf-blueprint-plugin/releases/latest) and install it manually
   using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
 
