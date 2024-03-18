@@ -68,22 +68,4 @@ tasks {
             }
         })
     }
-
-    /*val marketplaceProps = Properties().apply {
-        load(project.rootProject.file("marketplace.properties").inputStream())
-    }
-
-    signPlugin {
-        certificateChain.set(environment("CERTIFICATE_CHAIN"))
-        privateKey.set(environment("PRIVATE_KEY"))
-        password.set(environment("PRIVATE_KEY_PASSWORD"))
-    }
-
-    publishPlugin {
-        dependsOn("patchChangelog")
-        token.set(marketplaceProps.getProperty("publishToken"))
-        channels.set(properties("pluginVersion").map {
-            listOf(it.split('-').getOrElse(1) { "default" }.split('.').first())
-        })
-    }*/
 }
