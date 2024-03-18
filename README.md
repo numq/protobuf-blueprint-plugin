@@ -1,3 +1,6 @@
+[![Version](https://img.shields.io/jetbrains/plugin/v/21792-protobuf-blueprint.svg)](https://plugins.jetbrains.com/plugin/21792-protobuf-blueprint)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/21792-protobuf-blueprint.svg)](https://plugins.jetbrains.com/plugin/21792-protobuf-blueprint)
+
 ![logo](./media/logo.png)
 
 <!-- Plugin description -->
@@ -17,7 +20,7 @@ format.
 
 - Manually:
 
-  Download the [latest release](https://github.com/protobuf-blueprint-plugin/releases/latest) and install it manually
+  Download the [latest release](https://github.com/numq/protobuf-blueprint-plugin/releases/latest) and install it manually
   using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
 
@@ -25,5 +28,24 @@ format.
 
 1. Go to <b>Tools -> Protobuf Blueprint</b>  to open plugin tool window.
 2. Follow the format hint in the plugin tool window to generate the code.
+
+### Format Requirements:
+
+> Break the line to complete the input.
+
+Message:
+> Use *PascalCase* for **message names**.
+
+```message messageName messageName messageName```
+
+Enum:
+> Use *PascalCase* for **enum name** and *CAPITALS_WITH_UNDERSCORES* for **enum values**.
+
+```enum enumName enum_value enum_value enum_value```
+
+Service:
+> Use *PascalCase* for **service name** and **rpc names**.
+
+```service serviceName rpcName rpcName rpcName```
 
 ![preview-full](./media/preview-full.png)
