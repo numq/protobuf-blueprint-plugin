@@ -6,18 +6,18 @@ import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
+import com.intellij.ui.JBColor
 import com.intellij.ui.content.ContentFactory
+import com.intellij.util.ui.JBUI
 import com.numq.protobufblueprint.AppBundle
 import com.numq.protobufblueprint.forms.RootForm
 import com.numq.protobufblueprint.services.GeneratorService
 import com.numq.protobufblueprint.standard.ProtobufStandard
-import java.awt.Color
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 import java.awt.event.ActionListener
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
-import javax.swing.border.EmptyBorder
 import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 import javax.swing.text.DefaultHighlighter
@@ -25,12 +25,14 @@ import javax.swing.text.DefaultHighlighter
 
 class GeneratorToolWindowFactory : ToolWindowFactory {
 
-    private val contentFactory = ContentFactory.SERVICE.getInstance()
+    private val contentFactory = ContentFactory.getInstance()
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
         val content = contentFactory
-            .createContent(GeneratorToolWindow(toolWindow)
-                .getContent(), null, false)
+            .createContent(
+                GeneratorToolWindow(toolWindow)
+                    .getContent(), null, false
+            )
         toolWindow.contentManager.addContent(content)
     }
 
@@ -39,7 +41,7 @@ class GeneratorToolWindowFactory : ToolWindowFactory {
     class GeneratorToolWindow(toolWindow: ToolWindow) {
 
         private val generator = toolWindow.project.service<GeneratorService>()
-        private val errorHighlighter = DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW)
+        private val errorHighlighter = DefaultHighlighter.DefaultHighlightPainter(JBColor.YELLOW)
 
         private var inputTextAreaDocumentListener: DocumentListener? = null
         private var highlightTooltipTextListener: MouseAdapter? = null
@@ -64,7 +66,7 @@ class GeneratorToolWindowFactory : ToolWindowFactory {
                 """.trimIndent()
             }
             inputTextArea.apply {
-                border = EmptyBorder(8, 8, 8, 8)
+                border = JBUI.Borders.empty(8)
                 inputTextAreaDocumentListener?.let(document::removeDocumentListener)
                 document.addDocumentListener(object : DocumentListener {
                     override fun changedUpdate(e: DocumentEvent?) {
@@ -122,7 +124,7 @@ class GeneratorToolWindowFactory : ToolWindowFactory {
             }
             generatedTextArea.apply {
                 val generatedTextPlaceholder = AppBundle.message("generatedTextPlaceholder")
-                border = EmptyBorder(8, 8, 8, 8)
+                border = JBUI.Borders.empty(8)
                 text = generatedTextPlaceholder
                 generatedTextAreaDocumentListener?.let(document::removeDocumentListener)
                 document.addDocumentListener(object : DocumentListener {
