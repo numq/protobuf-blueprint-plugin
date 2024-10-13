@@ -6,45 +6,42 @@ fun environment(key: String) = providers.environmentVariable(key)
 
 plugins {
     id("java")
-    alias(libs.plugins.kotlin)
-    alias(libs.plugins.gradleIntelliJPlugin)
     alias(libs.plugins.changelog)
+    alias(libs.plugins.intelliJPlatform)
+    alias(libs.plugins.kotlin)
 }
 
 group = properties("pluginGroup").get()
 version = properties("pluginVersion").get()
 
+kotlin {
+    jvmToolchain(21)
+}
+
 repositories {
     mavenCentral()
-}
 
-kotlin {
-    jvmToolchain(17)
-}
-
-intellij {
-    pluginName.set(properties("pluginName"))
-    version.set(properties("platformVersion"))
-    type.set(properties("platformType"))
-    plugins.set(properties("platformPlugins").map { it.split(',').map(String::trim).filter(String::isNotEmpty) })
-}
-
-changelog {
-    groups.empty()
-    repositoryUrl.set(properties("pluginRepositoryUrl"))
-}
-
-tasks {
-    wrapper {
-        gradleVersion = properties("gradleVersion").get()
+    intellijPlatform {
+        defaultRepositories()
     }
+}
 
-    patchPluginXml {
-        version.set(properties("pluginVersion"))
-        sinceBuild.set(properties("pluginSinceBuild"))
-        untilBuild.set(properties("pluginUntilBuild"))
+dependencies {
+    testImplementation(libs.junit)
 
-        pluginDescription.set(providers.fileContents(layout.projectDirectory.file("README.md")).asText.map {
+    intellijPlatform {
+        create(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
+        plugins(providers.gradleProperty("platformPlugins").map { it.split(',') })
+        instrumentationTools()
+        pluginVerifier()
+    }
+}
+
+intellijPlatform {
+    pluginConfiguration {
+        version = providers.gradleProperty("pluginVersion")
+
+        description = providers.fileContents(layout.projectDirectory.file("README.md")).asText.map {
             val start = "<!-- Plugin description -->"
             val end = "<!-- Plugin description end -->"
 
@@ -54,10 +51,10 @@ tasks {
                 }
                 subList(indexOf(start) + 1, indexOf(end)).joinToString("\n").let(::markdownToHTML)
             }
-        })
+        }
 
         val changelog = project.changelog
-        changeNotes.set(properties("pluginVersion").map { pluginVersion ->
+        changeNotes = providers.gradleProperty("pluginVersion").map { pluginVersion ->
             with(changelog) {
                 renderItem(
                     (getOrNull(pluginVersion) ?: getUnreleased())
@@ -66,6 +63,64 @@ tasks {
                     Changelog.OutputType.HTML,
                 )
             }
-        })
+        }
+
+        ideaVersion {
+            sinceBuild = providers.gradleProperty("pluginSinceBuild")
+            untilBuild = providers.gradleProperty("pluginUntilBuild")
+        }
+    }
+
+    signing {
+        certificateChain = providers.environmentVariable("CERTIFICATE_CHAIN")
+        privateKey = providers.environmentVariable("PRIVATE_KEY")
+        password = providers.environmentVariable("PRIVATE_KEY_PASSWORD")
+    }
+
+    publishing {
+        token = providers.environmentVariable("PUBLISH_TOKEN")
+        channels = providers.gradleProperty("pluginVersion").map { listOf(it.substringAfter('-', "").substringBefore('.').ifEmpty { "default" }) }
+    }
+
+    pluginVerification {
+        ides {
+            recommended()
+        }
+    }
+}
+
+changelog {
+    groups.empty()
+    repositoryUrl = providers.gradleProperty("pluginRepositoryUrl")
+}
+
+tasks {
+    wrapper {
+        gradleVersion = providers.gradleProperty("gradleVersion").get()
+    }
+
+    publishPlugin {
+        dependsOn(patchChangelog)
+    }
+}
+
+intellijPlatformTesting {
+    runIde {
+        register("runIdeForUiTests") {
+            task {
+                jvmArgumentProviders += CommandLineArgumentProvider {
+                    listOf(
+                        "-Drobot-server.port=8082",
+                        "-Dide.mac.message.dialogs.as.sheets=false",
+                        "-Djb.privacy.policy.text=<!--999.999-->",
+                        "-Djb.consents.confirmation.enabled=false",
+                    )
+                }
+            }
+
+            plugins {
+                robotServerPlugin()
+            }
+        }
     }
 }
