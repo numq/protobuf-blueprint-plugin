@@ -8,6 +8,9 @@
 format.
 <!-- Plugin description end -->
 
+Built with Jetpack Compose and JetBrains Jewel, this plugin offers a smooth, modern, and high-performance UI experience
+directly within your IDE.
+
 ![preview](./media/preview.png)
 
 ## Installation
@@ -61,4 +64,12 @@ Use _PascalCase_ for service name and rpc names.
 
 ```service serviceName rpcName rpcName rpcName```
 
-![preview-full](./media/preview-full.png)
+## Architecture
+
+This project is built using robust architecture patterns to ensure maintainability and clean separation of concerns:
+
+- [FLIP](https://www.github.com/numq/flip) - Reactive UI state management pattern.
+
+- [Reduce & Conquer](https://www.github.com/numq/reduce-and-conquer) - Structured state reduction pattern.
+
+- [UseCase](https://www.github.com/numq/usecase) - Standardized business logic execution.
