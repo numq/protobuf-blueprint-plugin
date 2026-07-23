@@ -4,7 +4,7 @@
 ![logo](./media/logo.png)
 
 <!-- Plugin description -->
-**Protobuf Blueprint** is an Intellij Idea plugin that allows you to generate Protocol Buffers code using simple
+**Protobuf Blueprint** is an IntelliJ IDEA plugin that allows you to generate Protocol Buffers code using simple
 format.
 <!-- Plugin description end -->
 
