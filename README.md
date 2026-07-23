@@ -13,6 +13,8 @@ directly within your IDE.
 
 ![preview](./media/preview.png)
 
+___
+
 ## Installation
 
 - Using IDE built-in plugin system:
@@ -23,6 +25,8 @@ Settings/Preferences > Plugins > Marketplace > Search for "Protobuf Blueprint" >
 
 Download the latest release and install it manually using Settings/Preferences > Plugins > ⚙️ > Install plugin from
 disk...
+
+___
 
 ## Usage
 
@@ -64,6 +68,8 @@ Use _PascalCase_ for service name and rpc names.
 
 ```service serviceName rpcName rpcName rpcName```
 
+___
+
 ## Architecture
 
 This project is built using robust architecture patterns to ensure maintainability and clean separation of concerns:
@@ -73,3 +79,25 @@ This project is built using robust architecture patterns to ensure maintainabili
 - [Reduce & Conquer](https://www.github.com/numq/reduce-and-conquer) - Structured state reduction pattern.
 
 - [UseCase](https://www.github.com/numq/usecase) - Standardized business logic execution.
+
+___
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+---
+
+<p align="center">
+  <a href="https://numq.github.io/support">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=112x112&data=https://numq.github.io/support&bgcolor=1a1b26&color=7aa2f7" 
+         width="112" 
+         height="112" 
+         style="border-radius: 4px;" 
+         alt="Support QR code">
+  </a>
+  <br>
+  <a href="https://numq.github.io/support" style="text-decoration: none;">
+    <code><font color="#bb9af7">Support Development: numq.github.io/support</font></code>
+  </a>
+</p>
